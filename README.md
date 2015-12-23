@@ -11,7 +11,7 @@ Sinopia is a private npm repository server. This version uploads its npm package
 ## To use the registry
 ` npm set registry http://<docker_host_ip>:4873/
 
-### Building and running yourself
+## Building and running yourself
 1. Clone the repo:  
 ` git clone https://github.com/ndigati/docker-sinopia.git `
 2. Change to new directory and build the image:  
