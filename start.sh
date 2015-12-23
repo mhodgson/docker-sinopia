@@ -52,4 +52,11 @@ ls -lrt /opt/sinopia/bucket/storage
 echo "Write to storage:"
 touch /opt/sinopia/bucket/storage/test
 
+# Set file and folder permissions correctly
+# Only needed if you upload files/folders directly into S3 bucket
+# Otherwise permissions are set correctly
+# Only need to run these if not using an empty S3 bucket
+# find /opt/sinopia/bucket/storage -type d -exec chmod 755 {} \;
+# find /opt/sinopia/bucket/storage -type f -exec chmod 644 {} \;
+
 node /opt/sinopia/node_modules/sinopia/bin/sinopia --config /opt/sinopia/config.yaml
