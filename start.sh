@@ -46,8 +46,8 @@ cat /opt/sinopia/config.yaml
 echo "Current user:"
 whoami
 
-echo "Base directory:"
-ls -lrt /opt/sinopia/bucket/storage
+# echo "Base directory:"
+# ls -lrt /opt/sinopia/bucket/storage
 
 echo "Write to storage:"
 touch /opt/sinopia/bucket/storage/test
