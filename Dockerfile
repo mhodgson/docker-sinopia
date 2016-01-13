@@ -10,11 +10,11 @@ RUN apt-get -y install fuse \
 RUN go get github.com/kahing/goofys
 RUN go install github.com/kahing/goofys
 
-RUN mkdir -p bucket/ ~/.aws/
+RUN mkdir -p /go/bucket/ /root/.aws/
 
 RUN npm install js-yaml sinopia
 
-COPY start.sh .
+COPY start.sh /go/start.sh
 
 EXPOSE 4873
 

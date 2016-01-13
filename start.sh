@@ -8,10 +8,10 @@ fi
 # Get config file
 # If you want to pull the config from somewhere else
 # Otherwise comment this out the curl command
-curl -s $SINOPIA_CONFIG > config.yaml
+curl -s $SINOPIA_CONFIG > /go/config.yaml
 
 echo "Received sinopia config:"
-cat config.yaml
+cat /go/config.yaml
 
 echo "Current user:"
 whoami
@@ -20,7 +20,7 @@ whoami
 # ls -lrt bucket/storage
 
 echo "Write to storage:"
-touch bucket/storage/test
+touch /go/bucket/storage/test
 
 # Set file and folder permissions correctly
 # Only needed if you upload files/folders directly into S3 bucket
@@ -29,7 +29,7 @@ touch bucket/storage/test
 # find bucket/storage -type d -exec chmod 755 {} \;
 # find bucket/storage -type f -exec chmod 644 {} \;
 
-node node_modules/sinopia/bin/sinopia --config config.yaml &
+node /go/node_modules/sinopia/bin/sinopia --config /go/config.yaml &
 
 # Abort if the SINOPIA_BUCKET was not provided
 if [ -z $SINOPIA_BUCKET ]; then
@@ -52,12 +52,15 @@ fi
 # Set provided AWS credentials for s3fs to use
 if [ ! -z $AWS_ACCESS_KEY_ID ] && [ ! -z $AWS_SECRET_ACCESS_KEY ]; then
   #set the aws access credentials from environment variables
-  echo $AWS_ACCESS_KEY_ID:$AWS_SECRET_ACCESS_KEY > ~/.passwd-s3fs
-  chmod 600 ~/.passwd-s3fs
+  cat > /go/.aws/credentials <<- EOM
+[default]
+aws_access_key_id = $AWS_ACCESS_KEY_ID
+aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+EOM
 fi
 
 # start s3 fuse
 # /usr/local/bin/s3fs $SINOPIA_BUCKET /opt/sinopia/bucket/ -o allow_other -o nonempty -o mp_umask="0022" #-d -d -f -o f2 -o curldbg
 
 # start goofys
-$GOPATH/bin/goofys -f -o allow_other -o nonempty $SINOPIA_BUCKET bucket
+$GOPATH/bin/goofys -f -o allow_other -o nonempty $SINOPIA_BUCKET /go/bucket/
