@@ -22,7 +22,7 @@ Sinopia is a private npm repository server. This version uploads its npm package
  ```
  
 3. Run the container:  
-	` docker run --name sinopia --privileged -d -e AWS_ACCESS_KEY_ID=<fill-in> -e AWS_SECRET_ACCESS_KEY=<fill-in> -e SINOPIA_BUCKET=<fill-in> -p 4873:4873 sinopia `
+	` docker run --name sinopia -d --cap-add sys_admin --device=/dev/fuse -e AWS_ACCESS_KEY_ID=<fill-in> -e AWS_SECRET_ACCESS_KEY=<fill-in> -e SINOPIA_BUCKET=<fill-in> -e SINOPIA_CONFIG=<fill-in> -p 4873:4873 sinopia `
 
 4. Sinopia should now be running on your machine at `<docker_host_ip>:4873` and syncing its contents to an S3 bucket `$SINOPIA_BUCKET`
 
