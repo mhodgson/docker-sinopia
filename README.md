@@ -30,3 +30,4 @@ Sinopia is a private npm repository server. This version uploads its npm package
 - [Sinopia on Github](https://github.com/rlidwka/sinopia)
 - [Inspiration for Docker set-up config](https://github.com/rlidwka/sinopia/pull/357/files)
 - [Sinopia's own Docker image](https://hub.docker.com/r/keyvanfatehi/sinopia/)
+- [Goofys (S3 filey system)](https://github.com/kahing/goofys)
