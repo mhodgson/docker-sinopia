@@ -16,12 +16,6 @@ cat /go/config.yaml
 echo "Current user:"
 whoami
 
-# echo "Base directory:"
-# ls -lrt bucket/storage
-
-echo "Write to storage:"
-touch /go/bucket/storage/test
-
 # Set file and folder permissions correctly
 # Only needed if you upload files/folders directly into S3 bucket
 # Otherwise permissions are set correctly
@@ -52,7 +46,7 @@ fi
 # Set provided AWS credentials for s3fs to use
 if [ ! -z $AWS_ACCESS_KEY_ID ] && [ ! -z $AWS_SECRET_ACCESS_KEY ]; then
   #set the aws access credentials from environment variables
-  cat > /go/.aws/credentials <<- EOM
+  cat > /root/.aws/credentials <<- EOM
 [default]
 aws_access_key_id = $AWS_ACCESS_KEY_ID
 aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
