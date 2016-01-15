@@ -41,8 +41,14 @@ $GOPATH/bin/goofys -o allow_other -o nonempty $SINOPIA_BUCKET $GOPATH/bucket/
 
 # Goofys logs to syslog a message when it succesfully mounts
 # wait for this before starting sinopia
+count=0
 while ! grep -q "successfully mounted" /var/log/syslog; do
+  if [ $count -eq 30 ]; then
+    echo "Goofys never mounted successfully. Something went wrong..."
+    exit 2
+  fi
   echo "Waiting for goofys..."
+  ((count=count+1))
   sleep 1
 done
 
