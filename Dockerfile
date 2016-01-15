@@ -39,8 +39,6 @@ RUN npm install js-yaml sinopia
 
 COPY start.sh $GOPATH/start.sh
 
-COPY config.yaml $GOPATH/config.yaml
-
 EXPOSE 4873
 
 CMD [ "/sbin/my_init", "--", "./start.sh" ]
