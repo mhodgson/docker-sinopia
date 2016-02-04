@@ -27,5 +27,5 @@ RUN chmod +x /home/start.sh /home/start_sinopia.sh && \
 
 EXPOSE 4873
 
-# CMD [ "supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
+CMD [ "supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
 
