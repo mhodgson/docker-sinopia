@@ -2,7 +2,7 @@
 
 # Abort if the SINOPIA_BUCKET was not provided
 if [ -z $SINOPIA_BUCKET ]; then
-  echo "You need to set BUCKET environment variable. Aborting!"
+  echo "You need to set SINOPIA_BUCKET environment variable. Aborting!"
   exit 1
 fi
 
@@ -21,36 +21,13 @@ fi
 # Set provided AWS credentials for s3fs to use
 if [ ! -z $AWS_ACCESS_KEY_ID ] && [ ! -z $AWS_SECRET_ACCESS_KEY ]; then
   #set the aws access credentials from environment variables
+  mkdir -p /root/.aws/
   cat > /root/.aws/credentials <<- EOM
 [default]
 aws_access_key_id = $AWS_ACCESS_KEY_ID
 aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
 EOM
 fi
-
-# goofys needs a syslog daemon running in order to run in the background
-syslog=$(pidof syslog-ng)
-until syslog=$(pidof syslog-ng); do
-  echo "Waiting for syslog-ng..."
-  sleep 1
-done
-
-echo "Done waiting...starting goofys"
-# start goofys
-$GOPATH/bin/goofys -o allow_other -o nonempty $SINOPIA_BUCKET $GOPATH/bucket/
-
-# Goofys logs to syslog a message when it succesfully mounts
-# wait for this before starting sinopia
-count=0
-while ! grep -q "successfully mounted" /var/log/syslog; do
-  if [ $count -eq 30 ]; then
-    echo "Goofys never mounted successfully. Something went wrong..."
-    exit 2
-  fi
-  echo "Waiting for goofys..."
-  ((count=count+1))
-  sleep 1
-done
 
 if [ -z $SINOPIA_CONFIG ]; then
   echo "You need to set SINOPIA_CONFIG"
@@ -60,13 +37,8 @@ fi
 # Get config file
 # If you want to pull the config from somewhere else
 # Otherwise comment this out the curl command
-curl -s $SINOPIA_CONFIG > $GOPATH/config.yaml
+curl -s $SINOPIA_CONFIG > /home/config.yaml
 
-echo "Received sinopia config:"
-cat $GOPATH/config.yaml
-
-echo "Current user:"
-whoami
-
-node $GOPATH/node_modules/sinopia/bin/sinopia --config $GOPATH/config.yaml
+# echo "Received sinopia config:"
+cat /home/config.yaml
 
