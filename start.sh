@@ -29,15 +29,15 @@ aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
 EOM
 fi
 
-if [ -z $SINOPIA_CONFIG ]; then
-  echo "You need to set SINOPIA_CONFIG"
-  exit 1
-fi
+# if [ -z $SINOPIA_CONFIG ]; then
+#   echo "You need to set SINOPIA_CONFIG"
+#   exit 1
+# fi
 
 # Get config file
 # If you want to pull the config from somewhere else
 # Otherwise comment this out the curl command
-curl -s $SINOPIA_CONFIG > /home/config.yaml
+# curl -s $SINOPIA_CONFIG > /home/config.yaml
 
 # echo "Received sinopia config:"
 cat /home/config.yaml

@@ -1,31 +1,28 @@
-FROM gliderlabs/alpine:3.2
+FROM factual/docker-base
 MAINTAINER Nicholas Digati <nicholas@factual.com>
-
-RUN apk update && \
-  apk upgrade && \
-  apk --update add bash fuse nodejs openssl git curl go supervisor && \
-  rm -rf /var/cache/apk/* /usr/share/ri
-
-ENV GOROOT /usr/lib/go
-ENV GOPATH /gopath
-ENV GOBIN /gopath/bin
-ENV PATH $PATH:$GOROOT/bin:$GOPATH/bin
 
 WORKDIR /home/
 
-RUN go get github.com/kahing/goofys && \
-  go install github.com/kahing/goofys && \
-  npm install js-yaml sinopia
+RUN	curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
+	apt-get update && \
+	apt-get -y install nodejs \
+	  python3-pip \
+		supervisor && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# COPY config.yaml /home/config.yaml
+RUN npm install js-yaml sinopia && \
+  pip3 install awscli
+
+COPY config.yaml /home/config.yaml
 COPY start.sh /home/start.sh
-COPY start_sinopia.sh /home/start_sinopia.sh
+COPY service_start.sh /home/service_start.sh
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-RUN chmod +x /home/start.sh /home/start_sinopia.sh && \
-  mkdir -p /home/bucket/
+RUN chmod +x /home/start.sh /home/service_start.sh && \
+  mkdir /home/bucket
 
 EXPOSE 4873
 
-CMD [ "supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
+# CMD [ "supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
+# CMD [ "/sbin/my_init" ]
 
