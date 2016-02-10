@@ -23,6 +23,5 @@ RUN chmod +x /home/start.sh /home/service_start.sh && \
 
 EXPOSE 4873
 
-# CMD [ "supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
-# CMD [ "/sbin/my_init" ]
+CMD [ "supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
 
