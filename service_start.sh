@@ -18,6 +18,6 @@ supervisorctl start sinopia
 
 crontab -l > mycron
 # if 10 minutes is too expensive change to longer time
-echo "10 * * * * supervisorctl start sync_s3_with_local > /var/log/cron.log  && echo 'done with sync'" >> mycron
+echo "10 * * * * supervisorctl start sync_s3_with_local > /var/log/cron.log" >> mycron
 crontab mycron
 rm mycron
