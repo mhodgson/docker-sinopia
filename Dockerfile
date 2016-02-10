@@ -4,10 +4,10 @@ MAINTAINER Nicholas Digati <nicholas@factual.com>
 WORKDIR /home/
 
 RUN	curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
-	apt-get update && \
-	apt-get -y install nodejs \
-	  python3-pip \
-		supervisor && \
+  apt-get update && \
+  apt-get -y install nodejs \
+    python3-pip \
+    supervisor && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN npm install js-yaml sinopia && \
