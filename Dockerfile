@@ -13,7 +13,6 @@ RUN	curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
 RUN npm install js-yaml sinopia && \
   pip3 install awscli
 
-COPY config.yaml /home/config.yaml
 COPY start.sh /home/start.sh
 COPY service_start.sh /home/service_start.sh
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
