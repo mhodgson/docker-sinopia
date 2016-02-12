@@ -5,7 +5,9 @@ Sinopia is a private npm repository server. This version uploads its npm package
 ` docker pull ndigati/docker-sinopia `
 
 ## Create container
-` docker run --name sinopia -d -e AWS_ACCESS_KEY_ID=<fill-in> -e AWS_SECRET_ACCESS_KEY=<fill-in> -e SINOPIA_BUCKET=<fill-in> -p 4873:4873 sinopia `
+```
+ docker run --name sinopia -d -e AWS_ACCESS_KEY_ID=<fill-in> -e AWS_SECRET_ACCESS_KEY=<fill-in> -e SINOPIA_BUCKET=<fill-in> -p 4873:4873 sinopia 
+```
 
 
 ## To use the registry
@@ -13,7 +15,9 @@ Sinopia is a private npm repository server. This version uploads its npm package
 
 ## Building and running yourself
 1. Clone the repo:  
-` git clone https://github.com/ndigati/docker-sinopia.git `
+```
+ git clone https://github.com/ndigati/docker-sinopia.git 
+```
 2. Change to new directory and build the image:  
 
  ```bash
@@ -22,7 +26,9 @@ Sinopia is a private npm repository server. This version uploads its npm package
  ```
  
 3. Run the container:  
-	` docker run --name sinopia -d -e AWS_ACCESS_KEY_ID=<fill-in> -e AWS_SECRET_ACCESS_KEY=<fill-in> -e SINOPIA_BUCKET=<fill-in> -e SINOPIA_CONFIG=<fill-in> -p 4873:4873 sinopia `
+	```
+   docker run --name sinopia -d -e AWS_ACCESS_KEY_ID=<fill-in> -e AWS_SECRET_ACCESS_KEY=<fill-in> -e SINOPIA_BUCKET=<fill-in> -e SINOPIA_CONFIG=<fill-in> -p 4873:4873 sinopia 
+  ```
 
 4. Sinopia should now be running on your machine at `<docker_host_ip>:4873` and syncing its contents to an S3 bucket `$SINOPIA_BUCKET`
 
