@@ -1,23 +1,11 @@
 #!/bin/bash
 
-supervisorctl start variable_check
+/home/variable_check.sh >> /var/log/variable_check.log
 
-while supervisorctl status variable_check | grep -i -q RUNNING; do
-  echo "Waiting for check to complete..."
-  sleep 1
-done
+aws s3 sync s3://"$SINOPIA_BUCKET"/ /home/bucket/ >> /var/log/sync_local_on_startup.log
 
-supervisorctl start sync_local_with_s3
-
-while supervisorctl status sync_local_with_s3 | grep -i -q RUNNING; do
-  echo "Waiting for sync to complete..."
-  sleep 5
-done
-
-supervisorctl start sinopia
-
-crontab -l > mycron
-# if 10 minutes is too expensive change to longer time
-echo "10 * * * * supervisorctl start sync_s3_with_local > /var/log/cron.log" >> mycron
+crontab -l 2>&1  > mycron
+echo "*/1 * * * * $(which aws) s3 sync /home/bucket/ s3://$SINOPIA_BUCKET/ >> /var/log/cron.log" >> mycron
 crontab mycron
 rm mycron
+

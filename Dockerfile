@@ -5,22 +5,21 @@ WORKDIR /home/
 
 RUN	curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
   apt-get update && \
-  apt-get -y install nodejs \
-    python3-pip \
-    supervisor && \
-	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  apt-get --no-install-recommends -y install nodejs \
+    python3-pip && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+  mkdir -p /etc/service/sinopia/ /etc/my_init.d/ /home/bucket
 
 RUN npm install js-yaml sinopia && \
   pip3 install awscli
 
-COPY start.sh /home/start.sh
-COPY service_start.sh /home/service_start.sh
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY variable_check.sh /home/variable_check.sh
+COPY service_start.sh /etc/my_init.d/99_service_start.sh
+COPY sinopia.sh /etc/service/sinopia/run
 
-RUN chmod +x /home/start.sh /home/service_start.sh && \
-  mkdir /home/bucket
+RUN chmod +x /home/variable_check.sh /etc/my_init.d/99_service_start.sh /etc/service/sinopia/run
 
 EXPOSE 4873
 
-CMD [ "supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
+CMD [ "/sbin/my_init" ]
 
