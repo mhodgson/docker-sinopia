@@ -7,7 +7,7 @@ RUN	curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
   apt-get update && \
   apt-get --no-install-recommends -y install nodejs \
     python3-pip && \
-	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
   mkdir -p /etc/service/sinopia/ /etc/my_init.d/ /home/bucket
 
 RUN npm install js-yaml sinopia && \
