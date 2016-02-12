@@ -15,9 +15,11 @@ Sinopia is a private npm repository server. This version uploads its npm package
 
 ## Building and running yourself
 1. Clone the repo:  
-```
- git clone https://github.com/ndigati/docker-sinopia.git 
-```
+
+  ```
+  git clone https://github.com/ndigati/docker-sinopia.git 
+  ```
+
 2. Change to new directory and build the image:  
 
  ```bash
