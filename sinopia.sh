@@ -1,4 +1,4 @@
 #!/bin/bash
 
-/home/node_modules/sinopia/bin/sinopia --config /home/config.yaml
+su -m sinopia -c /opt/sinopia/start.sh
 
